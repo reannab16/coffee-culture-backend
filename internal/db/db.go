@@ -29,6 +29,8 @@ func ConnectToMongoDB() {
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 
+	println(config.AppConfig().Database.MongoUri)
+
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(config.AppConfig().Database.MongoUri))
 	if err != nil {
 		log.Fatal("Failed to connect to MongoDB", err)

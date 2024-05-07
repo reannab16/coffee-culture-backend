@@ -1,7 +1,7 @@
 package serverless
 
 import (
-	// "github.com/gin-contrib/cors"
+	"github.com/gin-contrib/cors"
 	"log"
 
 	"coffee-culture.uk/internal/config"
@@ -27,14 +27,14 @@ func Initialize() (*gin.Engine, func()) {
 
 	router := gin.Default()
 	routes.SetupRoutes(router)
-	// router.Use(cors.New(cors.Config{
-	// 	AllowOrigins:     []string{"https://student-halls.com", "https://www.student-halls.com"},
-	// 	AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-	// 	AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
-	// 	ExposeHeaders:    []string{"Content-Length"},
-	// 	AllowCredentials: true,
-	// 	AllowWildcard:    true,
-	// }))
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://coffee-culture.uk", "https://www.coffee-culture.uk"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowWildcard:    true,
+	}))
 	return router, func() {
 		db.DisconnectFromMongoDB()
 	}
