@@ -28,6 +28,7 @@ func ConnectToMongoDB() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
+	
 
 	println(config.AppConfig().Database.AccessTimeout)
 
