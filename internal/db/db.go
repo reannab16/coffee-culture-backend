@@ -29,7 +29,7 @@ func ConnectToMongoDB() {
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 
-	println(config.AppConfig().Database.MongoUri)
+	println(config.AppConfig().Database.AccessTimeout)
 
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(config.AppConfig().Database.MongoUri))
 	if err != nil {
