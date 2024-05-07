@@ -22,6 +22,7 @@ type Config struct {
 
 
 
+
 // It is initialized once when the application starts.
 var appConfig = &Config{}
 
