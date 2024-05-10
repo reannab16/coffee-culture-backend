@@ -1,8 +1,6 @@
 package config
 
 import (
-	
-
 	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
 )
@@ -18,9 +16,20 @@ type Config struct {
 		MongoUri      string `envconfig:"MONGODB_URI" default:"mongodb://localhost:27017"`
 		AccessTimeout int    `envconfig:"MONGODB_ACCESS_TIMEOUT" default:"5"`
 	}
+	Auth struct {
+		JWTSecret        string `envconfig:"JWT_SECRET" default:"token-secret"`
+		JWTExpireInHours int    `envconfig:"JWT_EXPIRE" default:"24"`
+		TokenExpire      int    `envconfig:"TOKEN_EXPIRE" default:"60"`
+		ShortTokenExpire int    `envconfig:"SHORT_TOKEN_EXPIRE" default:"15"`
+		JWTIssuer        string `envconfig:"JWT_ISSUER" default:"coffee-culture.uk"`
+	}
+	Cors struct {
+		AllowOrigins     []string `envconfig:"CORS_ALLOW_ORIGINS" default:"*"`
+		AllowMethods     []string `envconfig:"CORS_ALLOW_METHODS" default:"GET, POST, PUT, DELETE, OPTIONS"`
+		AllowHeaders     []string `envconfig:"CORS_ALLOW_HEADERS" default:"Origin, Content-Length, Content-Type, Authorization, Tenant"`
+		AllowCredentials bool     `envconfig:"CORS_ALLOW_CREDENTIALS" default:"true"`
+	}
 }
-
-
 
 
 // It is initialized once when the application starts.
