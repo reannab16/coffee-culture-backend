@@ -12,5 +12,6 @@ func SetupRoutes(router *gin.Engine) {
 	// Version controlled routes
 	versionControlled := router.Group("/" + config.AppConfig().App.ApiVersion)
 	DefaultRoutes(versionControlled)
+	CustomerRoutes(versionControlled)
 
 }

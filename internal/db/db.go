@@ -10,6 +10,7 @@ import (
 )
 
 const DATABASE_NAME = "coffee-culture"
+const COLLECTION_CUSTOMER = "customer"
 
 var Client *mongo.Client
 var isConnected bool = false

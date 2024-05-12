@@ -1,0 +1,16 @@
+basePath: /v0
+host: api.coffee-culture.uk
+info:
+  contact: {}
+  description: This is the REST API for Coffee Culture.
+  title: Coffee Culture API
+  version: "1"
+paths: {}
+schemes:
+- https
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
