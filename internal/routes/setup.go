@@ -7,6 +7,7 @@ import (
 
 func SetupRoutes(router *gin.Engine) {
 	// No version routes
+	SwaggerRoutes(router)
 	NoVersionRoutes(router)
 
 	// Version controlled routes
