@@ -1,11 +1,13 @@
 package customer
 
 import (
+	"log"
+	"net/http"
+
+	"coffee-culture.uk/internal/api"
+	"coffee-culture.uk/internal/middleware"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
-	"coffee-culture.uk/internal/api"
-	"net/http"
-	"coffee-culture.uk/internal/middleware"
 )
 
 type CustomerHandler struct {
@@ -66,23 +68,27 @@ func (h *CustomerHandler) GetCurrentCustomer(c *gin.Context) {
 func (h *CustomerHandler) LoginUser(c *gin.Context) {
 	var reqPayload CustomerLoginRequest
 	if err := c.ShouldBindJSON(&reqPayload); err != nil {
-		api.Error(c, http.StatusBadRequest, "here")
+		log.Println("Error binding JSON payload:", err)
+		api.Error(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	customer, err := h.Repo.GetCustomerByEmail(c.Request.Context(), reqPayload.Email)
 	if err != nil {
+		log.Println("Error binding JSON payload:", err)
 		api.Error(c, http.StatusNotFound, "Customer not found")
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(customer.Password), []byte(reqPayload.Password)); err != nil {
+		log.Println("Error binding JSON payload:", err)
 		api.Error(c, http.StatusUnauthorized, "Invalid credentials")
 		return
 	}
 
 	token, err := middleware.GenerateJWTToken(customer.Email, customer.Username)
 	if err != nil {
+		log.Println("Error binding JSON payload:", err)
 		api.Error(c, http.StatusInternalServerError, "An error occurred while processing your request")
 		return
 	}
