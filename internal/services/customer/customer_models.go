@@ -9,9 +9,9 @@ import (
 // ---------------------------------------------------------------------------------------------------
 
 type CreateCustomerRequest struct {
-	ID          string  `json:"id,omitempty"`
-	Username    string  `json:"username"`
-	Email       string  `json:"email"`
+	// ID          string  `json:"id,omitempty"`
+	Username    string  `json:"username" binding:"required,alphanum,min=3,max=30"`
+	Email       string  `json:"email" binding:"required,email"`
 	Password    string  `json:"password" binding:"required,min=6"`
 
 }
