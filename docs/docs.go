@@ -161,11 +161,11 @@ const docTemplate = `{
         "customer.CustomerLoginResponse": {
             "type": "object",
             "properties": {
+                "customer": {
+                    "$ref": "#/definitions/customer.CustomerResponse"
+                },
                 "token": {
                     "type": "string"
-                },
-                "user": {
-                    "$ref": "#/definitions/customer.CustomerResponse"
                 }
             }
         },

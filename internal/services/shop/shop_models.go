@@ -9,7 +9,6 @@ import (
 // ---------------------------------------------------------------------------------------------------
 type Shop struct {
 	ID               primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty" validate:"required"`
-	Username         string             `json:"username,omitempty" bson:"username,omitempty" validate:"required"`
 	Password         string             `json:"-" bson:"password,omitempty" validate:"required"`
 	Email            string             `json:"email" bson:"email" validate:"required,email"`
 	ShopName         *string            `json:"shopName,omitempty" bson:"firstName,omitempty"`

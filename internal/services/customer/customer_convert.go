@@ -5,7 +5,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func ConvertCreateCustomerRequestToUser(req CreateCustomerRequest) (Customer, error) {
+func ConvertCreateCustomerRequestToCustomer(req CreateCustomerRequest) (Customer, error) {
 
 	hashed, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {

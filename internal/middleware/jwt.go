@@ -14,11 +14,12 @@ import (
 
 var jwtSecret = []byte(config.AppConfig().Auth.JWTSecret)
 
-func GenerateJWTToken(email string, username string) (string, error) {
+func GenerateJWTToken(email string, username string, userType string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"iss":      config.AppConfig().Auth.JWTIssuer,
 		"email":    email,
 		"username": username,
+		"userType": userType,
 		"exp":      time.Now().Add(time.Hour * time.Duration(config.AppConfig().Auth.JWTExpireInHours)).Unix(),
 		"iat":      time.Now().Unix(),
 	})
@@ -67,7 +68,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 			c.Set("email", claims["email"])
-			c.Set("accountType", claims["accountType"])
+			c.Set("userType", claims["userType"])
 		} else {
 			api.Error(c, http.StatusUnauthorized, "Invalid token")
 			return

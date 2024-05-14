@@ -20,7 +20,7 @@ func CustomerRoutes(group *gin.RouterGroup) {
 	})
 
 	customerGroup.POST("/login", func(c *gin.Context) {
-		customerHandler.LoginUser(c)
+		customerHandler.LoginCustomer(c)
 	})
 
 	// --- PROTECTED ROUTES ---

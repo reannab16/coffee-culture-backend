@@ -29,10 +29,10 @@ definitions:
     type: object
   customer.CustomerLoginResponse:
     properties:
+      customer:
+        $ref: '#/definitions/customer.CustomerResponse'
       token:
         type: string
-      user:
-        $ref: '#/definitions/customer.CustomerResponse'
     type: object
   customer.CustomerResponse:
     properties:

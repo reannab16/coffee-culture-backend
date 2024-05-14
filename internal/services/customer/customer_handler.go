@@ -35,7 +35,7 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 		return
 	}
 
-	mongoCustomer, err := ConvertCreateCustomerRequestToUser(reqPayload)
+	mongoCustomer, err := ConvertCreateCustomerRequestToCustomer(reqPayload)
 	if err != nil {
 		api.Error(c, http.StatusBadRequest, err.Error())
 		return
@@ -47,7 +47,7 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 		return
 	}
 
-	api.Success(c, http.StatusCreated, "Created user successfully", createdCustomer)
+	api.Success(c, http.StatusCreated, "Created customer successfully", createdCustomer)
 }
 
 func (h *CustomerHandler) GetCurrentCustomer(c *gin.Context) {
@@ -65,7 +65,7 @@ func (h *CustomerHandler) GetCurrentCustomer(c *gin.Context) {
 // @Failure 401 {object} map[string]interface{} "Invalid credentials"
 // @Failure 500 {object} map[string]interface{} "Internal server error"
 // @Router /customer/login [post]
-func (h *CustomerHandler) LoginUser(c *gin.Context) {
+func (h *CustomerHandler) LoginCustomer(c *gin.Context) {
 	var reqPayload CustomerLoginRequest
 	if err := c.ShouldBindJSON(&reqPayload); err != nil {
 		log.Println("Error binding JSON payload:", err)
@@ -86,7 +86,7 @@ func (h *CustomerHandler) LoginUser(c *gin.Context) {
 		return
 	}
 
-	token, err := middleware.GenerateJWTToken(customer.Email, customer.Username)
+	token, err := middleware.GenerateJWTToken(customer.Email, customer.Username, "customer")
 	if err != nil {
 		log.Println("Error binding JSON payload:", err)
 		api.Error(c, http.StatusInternalServerError, "An error occurred while processing your request")

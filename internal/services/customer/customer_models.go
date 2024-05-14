@@ -32,7 +32,7 @@ type CustomerResponse struct {
 
 type CustomerLoginResponse struct {
 	Token string       `json:"token"`
-	Customer  CustomerResponse `json:"user"`
+	Customer  CustomerResponse `json:"customer"`
 }
 
 // ---------------------------------------------------------------------------------------------------
