@@ -3,7 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/http-swagger"
-	_ "coffee-culture.uk/cmd/server/docs"
+	_ "coffee-culture.uk/docs"
 )
 
 func SwaggerRoutes(router *gin.Engine) {

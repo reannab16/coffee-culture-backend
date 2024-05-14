@@ -1,0 +1,72 @@
+basePath: /v0
+definitions:
+  customer.CreateCustomerRequest:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    type: object
+  customer.CustomerResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      username:
+        type: string
+    type: object
+host: api.coffee-culture.uk
+info:
+  contact: {}
+  description: This is the REST API for Coffee Culture.
+  title: Coffee Culture API
+  version: "1"
+paths:
+  /customer/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new customer
+      parameters:
+      - description: Customer object to be created
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/customer.CreateCustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Customer created successfully
+          schema:
+            $ref: '#/definitions/customer.CustomerResponse'
+        "400":
+          description: Invalid request format or parameters
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new customer
+      tags:
+      - customers
+schemes:
+- https
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
