@@ -19,6 +19,10 @@ func CustomerRoutes(group *gin.RouterGroup) {
 		customerHandler.CreateCustomer(c)
 	})
 
+	customerGroup.POST("/login", func(c *gin.Context) {
+		customerHandler.LoginUser(c)
+	})
+
 	// --- PROTECTED ROUTES ---
 	customerGroup.Use(middleware.JWTAuthMiddleware())
 	{

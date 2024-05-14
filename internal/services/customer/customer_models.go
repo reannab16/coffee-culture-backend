@@ -4,6 +4,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+type CustomerLoginRequest struct {
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
+}
+
 // ---------------------------------------------------------------------------------------------------
 // ----------------------------------------- CREATE OBJECTS ----------------------------------------
 // ---------------------------------------------------------------------------------------------------
@@ -23,6 +28,11 @@ type CustomerResponse struct {
 	ID        string `json:"id,omitempty"`
 	Username  string `json:"username"`
 	Email     string `json:"email"`
+}
+
+type CustomerLoginResponse struct {
+	Token string       `json:"token"`
+	Customer  CustomerResponse `json:"user"`
 }
 
 // ---------------------------------------------------------------------------------------------------
