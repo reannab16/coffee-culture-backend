@@ -59,19 +59,73 @@
                     }
                 }
             }
+        },
+        "/customer/login": {
+            "post": {
+                "description": "Login customer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "customers"
+                ],
+                "summary": "Login customer",
+                "parameters": [
+                    {
+                        "description": "Customer login credentials",
+                        "name": "customer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer.CustomerLoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer logged in successfully",
+                        "schema": {
+                            "$ref": "#/definitions/customer.CustomerLoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request format or parameters",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "customer.CreateCustomerRequest": {
             "type": "object",
             "required": [
-                "password"
+                "email",
+                "password",
+                "username"
             ],
             "properties": {
                 "email": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 },
                 "password": {
@@ -79,7 +133,36 @@
                     "minLength": 6
                 },
                 "username": {
+                    "description": "ID          string  `json:\"id,omitempty\"`",
+                    "type": "string",
+                    "maxLength": 30,
+                    "minLength": 3
+                }
+            }
+        },
+        "customer.CustomerLoginRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
                     "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "customer.CustomerLoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/customer.CustomerResponse"
                 }
             }
         },

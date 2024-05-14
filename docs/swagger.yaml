@@ -4,15 +4,35 @@ definitions:
     properties:
       email:
         type: string
-      id:
-        type: string
       password:
         minLength: 6
         type: string
       username:
+        description: ID          string  `json:"id,omitempty"`
+        maxLength: 30
+        minLength: 3
         type: string
     required:
+    - email
     - password
+    - username
+    type: object
+  customer.CustomerLoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  customer.CustomerLoginResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/customer.CustomerResponse'
     type: object
   customer.CustomerResponse:
     properties:
@@ -60,6 +80,43 @@ paths:
             additionalProperties: true
             type: object
       summary: Create a new customer
+      tags:
+      - customers
+  /customer/login:
+    post:
+      consumes:
+      - application/json
+      description: Login customer
+      parameters:
+      - description: Customer login credentials
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/customer.CustomerLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Customer logged in successfully
+          schema:
+            $ref: '#/definitions/customer.CustomerLoginResponse'
+        "400":
+          description: Invalid request format or parameters
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Invalid credentials
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login customer
       tags:
       - customers
 schemes:

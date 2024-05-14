@@ -57,8 +57,8 @@ func (h *CustomerHandler) GetCurrentCustomer(c *gin.Context) {
 // @Tags customers
 // @Accept json
 // @Produce json
-// @Param customer body LoginRequest true "Customer login credentials"
-// @Success 200 {object} LoginResponse "Customer logged in successfully"
+// @Param customer body CustomerLoginRequest true "Customer login credentials"
+// @Success 200 {object} CustomerLoginResponse "Customer logged in successfully"
 // @Failure 400 {object} map[string]interface{} "Invalid request format or parameters"
 // @Failure 401 {object} map[string]interface{} "Invalid credentials"
 // @Failure 500 {object} map[string]interface{} "Internal server error"
