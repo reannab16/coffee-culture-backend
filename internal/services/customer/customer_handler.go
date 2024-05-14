@@ -66,7 +66,7 @@ func (h *CustomerHandler) GetCurrentCustomer(c *gin.Context) {
 func (h *CustomerHandler) LoginUser(c *gin.Context) {
 	var reqPayload CustomerLoginRequest
 	if err := c.ShouldBindJSON(&reqPayload); err != nil {
-		api.Error(c, http.StatusBadRequest, err.Error())
+		api.Error(c, http.StatusBadRequest, "here")
 		return
 	}
 
