@@ -57,9 +57,16 @@ func (r *repositoryImpl) EditCredentials(c context.Context, customer Customer) (
 	panic("unimplemented")
 }
 
-// GetCustomerByEmail implements CustomerRepository.
 func (r *repositoryImpl) GetCustomerByEmail(c context.Context, email string) (*Customer, error) {
-	panic("unimplemented")
+	filter := bson.M{"email": email}
+
+	var customer Customer
+	err := r.collection.FindOne(c, filter).Decode(&customer)
+	if err != nil {
+		return nil, err
+	}
+
+	return &customer, nil
 }
 
 // GetStampHistory implements CustomerRepository.
