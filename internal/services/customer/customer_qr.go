@@ -23,6 +23,9 @@ func SendCustomerQR(customerEmail string, customerID primitive.ObjectID, templat
 	//load html template file
 	var body bytes.Buffer
 	t, err := template.ParseFiles(templatePath)
+	if err != nil {
+        return err
+    }
 
 	//data to populate the template
 	data := struct {
