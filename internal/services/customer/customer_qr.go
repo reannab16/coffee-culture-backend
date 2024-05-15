@@ -86,7 +86,7 @@ func SendMailSimple() {
 	msg:= "Subject: subejct" + "\n" + headers + "\n\n"
 
 	err := smtp.SendMail(
-		"smtp.gmail.com:587",
+		"smtp.gmail.com:25",
 		auth,
 		config.AppConfig().Email.CCEmail,
 		[]string{config.AppConfig().Email.CCEmail},
