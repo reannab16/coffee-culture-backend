@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/base64"
 	"html/template"
-	"net/smtp"
 
 	"coffee-culture.uk/internal/config"
 	qrcode "github.com/skip2/go-qrcode"
@@ -45,63 +44,12 @@ func SendCustomerQR(customerEmail string, customerID primitive.ObjectID, templat
 
 	SendGoMail();
 
-	
-SendMailSimple()
-	SendMailSimpleHTML("hi", body.String(), []string{customerEmail})
-	
 	return nil
 
-
 }
 
-func SendMailSimpleHTML(subject string, html string, to []string) {
-	auth := smtp.PlainAuth(
-		"",
-		config.AppConfig().Email.CCEmail,
-		config.AppConfig().Email.AppPassword,
-		"smtp.gmail.com",
-	)
-	headers := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";"
 
-	msg:= "Subject: " + subject + "\n" + headers + "\n\n" + html
-
-	err := smtp.SendMail(
-		"smtp.gmail.com:587",
-		auth,
-		config.AppConfig().Email.CCEmail,
-		to,
-		[]byte(msg),
-	)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func SendMailSimple() {
-	auth := smtp.PlainAuth(
-		"",
-		config.AppConfig().Email.CCEmail,
-		config.AppConfig().Email.AppPassword,
-		"smtp.gmail.com",
-	)
-	headers := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";"
-
-	msg:= "Subject: subejct" + "\n" + headers + "\n\n"
-
-	err := smtp.SendMail(
-		"smtp.gmail.com:25",
-		auth,
-		config.AppConfig().Email.CCEmail,
-		[]string{config.AppConfig().Email.CCEmail},
-		[]byte(msg),
-
-	)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func SendGoMail() {
+func SendGoMail() error {
 	m := gomail.NewMessage()
 m.SetHeader("From", config.AppConfig().Email.CCEmail)
 m.SetHeader("To", config.AppConfig().Email.CCEmail)
@@ -114,6 +62,8 @@ d := gomail.NewDialer("smtp.example.com", 587, config.AppConfig().Email.CCEmail,
 
 // Send the email to Bob, Cora and Dan.
 if err := d.DialAndSend(m); err != nil {
-	panic(err)
+	return err
 }
+
+return nil
 }
