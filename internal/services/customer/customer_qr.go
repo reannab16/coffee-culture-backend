@@ -83,7 +83,7 @@ func SendMailSimple() {
 	)
 	headers := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";"
 
-	msg:= "Subject: subejct" + "\n" + headers + "\n\n" + html
+	msg:= "Subject: subejct" + "\n" + headers + "\n\n"
 
 	err := smtp.SendMail(
 		"smtp.gmail.com:587",
