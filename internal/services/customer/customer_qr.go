@@ -2,6 +2,7 @@ package customer
 
 import (
 	"bytes"
+	"encoding/base64"
 	"html/template"
 	"net/smtp"
 
@@ -17,12 +18,7 @@ func SendCustomerQR(customerEmail string, customerID primitive.ObjectID, templat
     if err != nil {
         return err
     }
-
-	//save qr image to a file
-	err = qrCode.WriteFile(256, "qrcode.png")
-    if err != nil {
-        return err
-    }
+	qrCodeBase64 := base64.StdEncoding.EncodeToString(qrCode)
 
 	//load html template file
 	var body bytes.Buffer
@@ -31,20 +27,21 @@ func SendCustomerQR(customerEmail string, customerID primitive.ObjectID, templat
 	//data to populate the template
 	data := struct {
 		CustomerUsername string
-		CustomerID primitive.ObjectID
+		qrCodeBase64 string
 	}{
 		CustomerUsername: customerUsername,
-		CustomerID: customerID,
+		qrCodeBase64: qrCodeBase64,
 	}
 
 	//Execute the template with the data
-	err := t.Execute(&body, data)
+	err = t.Execute(&body, data)
 	if err != nil {
 		return err
 	}
 
-	SendMailSimpleHTML("hi", body, []string{customerEmail})
+	SendMailSimpleHTML("hi", body.String(), []string{customerEmail})
 	
+	return nil
 
 
 }
@@ -58,7 +55,7 @@ func SendMailSimpleHTML(subject string, html string, to []string) {
 	)
 	headers := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";"
 
-	msg:= "Subject: " + subject + "\n" + headers + "\n\n" + html.String()
+	msg:= "Subject: " + subject + "\n" + headers + "\n\n" + html
 
 	err := smtp.SendMail(
 		"smtp.gmail.com:587",
