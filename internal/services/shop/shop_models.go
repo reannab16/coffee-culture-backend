@@ -11,7 +11,7 @@ type Shop struct {
 	ID               primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty" validate:"required"`
 	Password         string             `json:"-" bson:"password,omitempty" validate:"required"`
 	Email            string             `json:"email" bson:"email" validate:"required,email"`
-	ShopName         *string            `json:"shopName,omitempty" bson:"firstName,omitempty"`
+	ShopName         *string            `json:"shopName,omitempty" bson:"shopName,omitempty"`
 	AdminPassword    *string            `json:"adminPassword,omitempty" bson:"adminPassword,omitempty"`
 	Locations        *[]Location        `json:"location,omitempty" bson:"location,omitempty"`
 	About            *string            `json:"about,omitempty" bson:"about,omitempty"`

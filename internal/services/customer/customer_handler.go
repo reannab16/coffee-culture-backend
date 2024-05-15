@@ -8,6 +8,7 @@ import (
 	"coffee-culture.uk/internal/middleware"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
+	// "coffee-culture.uk/internal/customer"
 )
 
 type CustomerHandler struct {
@@ -47,8 +48,12 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 		return
 	}
 
+	SendCustomerQR(createdCustomer.Email, createdCustomer.ID, "./customer_qr_mail.html", createdCustomer.Username)
+
 	api.Success(c, http.StatusCreated, "Created customer successfully", createdCustomer)
 }
+
+
 
 func (h *CustomerHandler) GetCurrentCustomer(c *gin.Context) {
 

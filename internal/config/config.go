@@ -29,6 +29,10 @@ type Config struct {
 		AllowHeaders     []string `envconfig:"CORS_ALLOW_HEADERS" default:"Origin, Content-Length, Content-Type, Authorization, Tenant"`
 		AllowCredentials bool     `envconfig:"CORS_ALLOW_CREDENTIALS" default:"true"`
 	}
+	Email struct {
+		AppPassword string `envconfig:"APP_PASSWORD"`
+		CCEmail string `envconfig:"EMAIL"`
+	}
 }
 
 
