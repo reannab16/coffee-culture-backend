@@ -9,6 +9,7 @@ import (
 	"coffee-culture.uk/internal/config"
 	qrcode "github.com/skip2/go-qrcode"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"gopkg.in/gomail.v2"
 )
 
 func SendCustomerQR(customerEmail string, customerID primitive.ObjectID, templatePath string, customerUsername string) error {
@@ -41,6 +42,8 @@ func SendCustomerQR(customerEmail string, customerID primitive.ObjectID, templat
 	if err != nil {
 		return err
 	}
+
+	SendGoMail();
 
 	
 SendMailSimple()
@@ -96,4 +99,21 @@ func SendMailSimple() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func SendGoMail() {
+	m := gomail.NewMessage()
+m.SetHeader("From", config.AppConfig().Email.CCEmail)
+m.SetHeader("To", config.AppConfig().Email.CCEmail)
+// m.SetAddressHeader("Cc", "dan@example.com", "Dan")
+m.SetHeader("Subject", "Hello!")
+m.SetBody("text/html", "Hello <b>Bob</b> and <i>Cora</i>!")
+// m.Attach("/home/Alex/lolcat.jpg")
+
+d := gomail.NewDialer("smtp.example.com", 587, config.AppConfig().Email.CCEmail, config.AppConfig().Email.AppPassword)
+
+// Send the email to Bob, Cora and Dan.
+if err := d.DialAndSend(m); err != nil {
+	panic(err)
+}
 }
