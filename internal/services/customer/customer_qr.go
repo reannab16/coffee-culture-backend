@@ -42,6 +42,8 @@ func SendCustomerQR(customerEmail string, customerID primitive.ObjectID, templat
 		return err
 	}
 
+	
+SendMailSimple()
 	SendMailSimpleHTML("hi", body.String(), []string{customerEmail})
 	
 	return nil
@@ -66,6 +68,30 @@ func SendMailSimpleHTML(subject string, html string, to []string) {
 		config.AppConfig().Email.CCEmail,
 		to,
 		[]byte(msg),
+	)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func SendMailSimple() {
+	auth := smtp.PlainAuth(
+		"",
+		config.AppConfig().Email.CCEmail,
+		config.AppConfig().Email.AppPassword,
+		"smtp.gmail.com",
+	)
+	headers := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";"
+
+	msg:= "Subject: subejct" + "\n" + headers + "\n\n" + html
+
+	err := smtp.SendMail(
+		"smtp.gmail.com:587",
+		auth,
+		config.AppConfig().Email.CCEmail,
+		[]string{config.AppConfig().Email.CCEmail},
+		[]byte(msg),
+
 	)
 	if err != nil {
 		panic(err)
